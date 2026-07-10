@@ -438,20 +438,12 @@ footer{margin-top:60px; padding:24px 32px; text-align:center; font-size:11px; co
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <h3 class="h">D5. Ranking de similitud de la denominación propuesta</h3>
-    <table id="similarity-table">
-      <thead><tr><th>Programa comparado</th><th>Jaccard</th><th>Coseno TF-IDF</th><th>Bigramas</th><th>Coincidencia de palabras</th><th>Similitud combinada</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <div class="card" style="margin-top:16px;">
-    <h3 class="h">D6. Oportunidades estratégicas detectadas automáticamente</h3>
+    <h3 class="h">D5. Oportunidades estratégicas detectadas automáticamente</h3>
     <div id="opportunities-list"></div>
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <h3 class="h">D7. Diagnóstico ejecutivo</h3>
+    <h3 class="h">D6. Diagnóstico ejecutivo</h3>
     <div class="diag-grid">
       <div class="diag-box diag-f"><h4>Fortalezas</h4><ul id="diag-f"></ul></div>
       <div class="diag-box diag-d"><h4>Debilidades</h4><ul id="diag-d"></ul></div>
@@ -792,14 +784,6 @@ const similarityRows = bench.map(r=>{
   const combined = (jac+cos+big+wordMatch)/4;
   return {inst:r.NOMBRE_INSTITUCIÓN, nombre:r.NOMBRE_DEL_PROGRAMA, jac,cos,big,wordMatch,combined};
 }).sort((a,b)=>b.combined-a.combined);
-
-document.querySelector('#similarity-table tbody').innerHTML = similarityRows.map(r=>`
-  <tr>
-    <td>${escapeHtml(r.inst)}<div class="small" style="color:var(--ink-faint)">${escapeHtml(r.nombre)}</div></td>
-    <td>${(r.jac*100).toFixed(0)}%</td><td>${(r.cos*100).toFixed(0)}%</td>
-    <td>${(r.big*100).toFixed(0)}%</td><td>${(r.wordMatch*100).toFixed(0)}%</td>
-    <td><span class="badge ${r.combined>0.4?'badge-warn':(r.combined>0.2?'badge-gold':'badge-good')}">${(r.combined*100).toFixed(0)}%</span></td>
-  </tr>`).join('');
 
 const pctCred = percentileOf(uao.NÚMERO_CRÉDITOS, creditosBench);
 
